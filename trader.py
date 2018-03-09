@@ -107,7 +107,7 @@ class Trader():
 
                     print("position" + repr(i))
                     print("action" + repr(action))
-                    print("sell:" + repr(result_df['open'].iloc[i]))
+                    print("buy:" + repr(result_df['open'].iloc[i+1]))
                     print("-----------------------")
 
 #                 else:     #sell short
@@ -123,11 +123,11 @@ class Trader():
                 if result_df['10days_mean'].iloc[i] - pred > 10:  #(sell) predict next day < 10 days mean
                     action = -1
 
-                    money = money + result_df['open'].iloc[i]
+                    money = money + result_df['open'].iloc[i+1]
 
                     print("position" + repr(i))
                     print("action" + repr(action))
-                    print("sell:" + repr(result_df['open'].iloc[i]))
+                    print("sell:" + repr(result_df['open'].iloc[i+1]))
                     print("-----------------------")
                 else:
                     action = 0
@@ -139,27 +139,21 @@ class Trader():
 
                     print("position" + repr(i))
                     print("action" + repr(action))
-                    print("sell:" + repr(result_df['open'].iloc[i]))
+                    print("buy:" + repr(result_df['open'].iloc[i]))
                     print("-----------------------")
                 else:
                     action = 0
 
 
-
-                # if i == test_data_length-1:     #last day sell the stock
-                #     action = -1
-                #     money = money + result_df['open'].iloc[i]
-
-#                     print("position" + repr(i))
-#                     print("action" + repr(action))
-#                     print(result_df['open'].iloc[i])
-#                     print("-----------------------")
-
-
             action_list.append(action)
 
-        #in the last day sell the stock
-        money += result_df['open'].iloc[test_data_length-1]
+        # print(action_list)
+        # print(len(action_list))
+
+        #in the last day if hold/short stock, then sell the stock
+        if sum(action_list) != 0:
+            money += result_df['open'].iloc[test_data_length-1]
+
         print(money)
 
         #actual tomorrow value
@@ -178,14 +172,18 @@ class Trader():
 
         print(action_list)
         print(len(action_list))
-        action_list.append(0)
-        result_df['action'] = action_list
-        result_df.to_csv('result_df.csv')
+
+
 
         with open('output.csv', 'w') as output_file:
             wf = csv.writer(output_file,lineterminator='\n')
             for val in action_list:
                 wf.writerow([val])
+
+        action_list.append(0)
+        result_df['action'] = action_list
+        result_df.to_csv('result_df.csv')
+
 
 # In[3]:
 
