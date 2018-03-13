@@ -5,13 +5,11 @@
 
 import pandas  as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
-from sklearn import svm
-from sklearn.metrics import accuracy_score
 import argparse
 import csv
+#import matplotlib.pyplot as plt #matplotlib==2.2.0
 
 class Trader():
     def drawPlot(self, result_df):
@@ -105,18 +103,10 @@ class Trader():
 
                     money = money - result_df['open'].iloc[i+1]     #buy in next day open price
 
-                    print("position" + repr(i))
-                    print("action" + repr(action))
-                    print("buy:" + repr(result_df['open'].iloc[i+1]))
-                    print("-----------------------")
-
-#                 else:     #sell short
-#                     action = -1
-#                     money = money + result_df['open'].iloc[i]
-#                     print("position" + repr(i))
-#                     print("action" + repr(action))
-#                     print("sell:" + repr(result_df['open'].iloc[i]))
-#                     print("-----------------------")
+                    # print("position" + repr(i))
+                    # print("action" + repr(action))
+                    # print("buy:" + repr(result_df['open'].iloc[i+1]))
+                    # print("-----------------------")
 
 
             elif sum(action_list) == 1:    #one stock
@@ -125,10 +115,10 @@ class Trader():
 
                     money = money + result_df['open'].iloc[i+1]
 
-                    print("position" + repr(i))
-                    print("action" + repr(action))
-                    print("sell:" + repr(result_df['open'].iloc[i+1]))
-                    print("-----------------------")
+                    # print("position" + repr(i))
+                    # print("action" + repr(action))
+                    # print("sell:" + repr(result_df['open'].iloc[i+1]))
+                    # print("-----------------------")
                 else:
                     action = 0
 
@@ -137,10 +127,10 @@ class Trader():
                     action = 1
                     money = money - result_df['open'].iloc[i+1]
 
-                    print("position" + repr(i))
-                    print("action" + repr(action))
-                    print("buy:" + repr(result_df['open'].iloc[i]))
-                    print("-----------------------")
+                    # print("position" + repr(i))
+                    # print("action" + repr(action))
+                    # print("buy:" + repr(result_df['open'].iloc[i]))
+                    # print("-----------------------")
                 else:
                     action = 0
 
@@ -154,7 +144,7 @@ class Trader():
         if sum(action_list) != 0:
             money += result_df['open'].iloc[test_data_length-1]
 
-        print(money)
+        #print(money)
 
         #actual tomorrow value
         result_df['actual'] = pd.Series(np.zeros(test_data_length), index=testing_data.index)
@@ -170,8 +160,8 @@ class Trader():
         #draw plot
         #self.drawPlot(result_df)
 
-        print(action_list)
-        print(len(action_list))
+        # print(action_list)
+        # print(len(action_list))
 
 
 
@@ -180,9 +170,9 @@ class Trader():
             for val in action_list:
                 wf.writerow([val])
 
-        action_list.append(0)
-        result_df['action'] = action_list
-        result_df.to_csv('result_df.csv')
+        #action_list.append(0)
+        #result_df['action'] = action_list
+        #result_df.to_csv('result_df.csv')
 
 
 # In[3]:
