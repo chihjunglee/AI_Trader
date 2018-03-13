@@ -144,7 +144,7 @@ class Trader():
         if sum(action_list) != 0:
             money += result_df['open'].iloc[test_data_length-1]
 
-        #print(money)
+        print(money)
 
         #actual tomorrow value
         result_df['actual'] = pd.Series(np.zeros(test_data_length), index=testing_data.index)
